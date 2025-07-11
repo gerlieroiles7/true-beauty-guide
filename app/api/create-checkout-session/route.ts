@@ -47,6 +47,8 @@ export async function POST(req: Request) {
       }),
     });
 
+    console.log("Creating checkout with:", { email, fbclid: body.fbclid, _p: body._p });
+
     const data = await response.json();
 
     if (!response.ok || !data?.data?.attributes?.url) {

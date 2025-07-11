@@ -1,6 +1,23 @@
 'use client';
 import Image from "next/image"
-import { Shield, Download, Clock, Star, Award, Users, Heart, Sparkles, Gift } from "lucide-react"
+import {
+  Shield,
+  Download,
+  Clock,
+  Star,
+  Award,
+  Users,
+  Heart,
+  Sparkles,
+  Gift,
+  BookOpen,
+  ClipboardList,
+  GraduationCap,
+  CalendarCheck,
+  Droplet,
+  AlarmClock  
+} from "lucide-react";
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -35,14 +52,16 @@ export default function LandingPage() {
 
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const fbclid = urlParams.get('fbclid');
-    const browserId = crypto.randomUUID();
+    if (typeof window !== 'undefined' && window.crypto?.randomUUID) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const fbclid = urlParams.get('fbclid');
+      const browserId = window.crypto.randomUUID();
 
-    if (fbclid) {
-      localStorage.setItem('fbclid', fbclid);
+      if (fbclid) {
+        localStorage.setItem('fbclid', fbclid);
+      }
+      localStorage.setItem('_p', browserId);
     }
-    localStorage.setItem('_p', browserId);
   }, []);
 
 
@@ -109,7 +128,7 @@ export default function LandingPage() {
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif text-charcoal-800 leading-tight tracking-tight hero-3d">
                   The Secret to <span className="text-gold-600 italic">Top Shelf</span> Skincare...
                   <br />
-                  <span className="text-rose-600">Without the Thousands Wasted on Fancy Packaging & Marketing</span>
+                  <span className="text-rose-600 text-lg md:text-xl lg:text-2xl block">Without the Thousands Wasted on Fancy Packaging & Marketing</span>
                 </h1>
                 <p className="text-sm md:text-xl text-charcoal-600 leading-relaxed font-light">
                   What if I told you that the $300 luxury moisturizer sitting on department store shelves contains the
@@ -122,26 +141,31 @@ export default function LandingPage() {
                 </p>
               </div>
 
-              <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 border border-gold-200 shadow-xl tech-card">
-                <div className="flex flex-wrap gap-6 text-xs text-charcoal-600">
-                  <div className="flex items-center gap-2">
-                    <Download className="w-5 h-5 text-gold-600" />
-                    <span className="font-medium">Instant Digital Download</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-5 h-5 text-gold-600" />
-                    <span className="font-medium">80-Page Comprehensive Guide</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Gift className="w-5 h-5 text-gold-600" />
-                    <span className="font-medium">Bonus Recipe Cards Included</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Shield className="w-5 h-5 text-gold-600" />
-                    <span className="font-medium">30-Day Money-Back Promise</span>
-                  </div>
-                </div>
-              </div>
+<div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 border border-gold-200 shadow-xl tech-card">
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-4 gap-x-8 text-sm text-charcoal-600">
+    <div className="flex items-center gap-3">
+      <Download className="w-5 h-5 text-gold-600" />
+      <span className="font-medium">Instant Digital Download</span>
+    </div>
+    <div className="flex items-center gap-3">
+      <BookOpen className="w-5 h-5 text-gold-600" />
+      <span className="font-medium">75-Page Guide & Recipe Book</span>
+    </div>
+    <div className="flex items-center gap-3">
+      <ClipboardList className="w-5 h-5 text-gold-600" />
+      <span className="font-medium">Part 1: The Quick-Start Recipe Guide</span>
+    </div>
+    <div className="flex items-center gap-3">
+      <GraduationCap className="w-5 h-5 text-gold-600" />
+      <span className="font-medium">Part 2: The Skincare Masterclass</span>
+    </div>
+    <div className="flex items-center gap-3">
+      <Shield className="w-5 h-5 text-gold-600" />
+      <span className="font-medium">30-Day Money-Back Promise</span>
+    </div>
+  </div>
+</div>
+
 
               <div className="space-y-6">
                 <Button
@@ -150,8 +174,12 @@ export default function LandingPage() {
                   id="buy-now-btn"
                   onClick={handleBuyNowClick}
                 >
-                  Get Your Beauty Secrets Now - Only $88
+                  Download Your Beauty Guide Now - Just $88
                 </Button>
+                <p className="text-xs text-center md:text-left text-charcoal-600 mt-2">
+  Prefer a payment plan? Click here for 3 easy installments of $33.
+</p>
+
                 <div className="text-center md:text-left">
                   <p className="text-xs text-charcoal-500 mb-2">
                     ✨ Instant access • No subscriptions • One-time investment • 30-day guarantee
@@ -168,7 +196,7 @@ export default function LandingPage() {
               <div className="absolute inset-0 bg-gradient-to-br from-gold-200/50 to-rose-200/50 rounded-3xl blur-3xl"></div>
               <div className="relative bg-gradient-to-br from-white via-cream-50 to-gold-50 rounded-3xl p-8 shadow-2xl border border-gold-200 tech-card-3d">
                 <Image
-                  src="/placeholder.svg?height=700&width=600"
+                  src="/images/Image1-Hero.png"
                   alt="The True Beauty Guide - Luxury DIY Skincare Secrets"
                   width={600}
                   height={700}
@@ -307,7 +335,7 @@ export default function LandingPage() {
               <div className="bg-gradient-to-r from-gold-50 to-rose-50 rounded-2xl p-8 border-l-4 border-gold-400 my-8 tech-card">
                 <p className="text-sm italic text-charcoal-800">
                   "What if I told you that the most expensive face cream at Nordstrom contains the same active
-                  ingredients as a recipe you can make in your kitchen for under $3? What if the secret to radiant skin
+                  ingredients as a recipe you can make in your kitchen for under $5? What if the secret to radiant skin
                   isn't locked away in some Swiss laboratory, but sitting in your pantry right now?"
                 </p>
               </div>
@@ -346,7 +374,7 @@ export default function LandingPage() {
                 <p className="text-lg font-serif text-charcoal-800 italic">With love and light,</p>
                 <div className="mt-4">
                   <Image
-                    src="/placeholder.svg?height=80&width=200"
+                    src="/images/Image2-Smile.png"
                     alt="Jessica Lee Signature"
                     width={200}
                     height={80}
@@ -387,83 +415,101 @@ export default function LandingPage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 mb-16">
-            <Card className="border-gold-200 shadow-xl bg-gradient-to-br from-white to-cream-50 tech-card-3d">
-              <CardContent className="p-8">
-                <div className="flex mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-gold-400 text-gold-400" />
-                  ))}
-                </div>
-                <p className="text-charcoal-700 mb-6 italic text-sm leading-relaxed">
-                  "I was spending $300+ monthly at Sephora. Now I make better products at home for under $20/month. My
-                  skin has never looked better, and I've saved over $2,000 this year alone!"
-                </p>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-rose-200 to-rose-300 rounded-full flex items-center justify-center">
-                    <span className="text-rose-800 font-bold text-lg">M</span>
-                  </div>
-                  <div>
-                    <p className="font-bold text-charcoal-800 text-sm">Maria Rodriguez, 34</p>
-                    <p className="text-xs text-charcoal-500">Marketing Manager & Mom of 2</p>
-                    <p className="text-xs text-gold-600 font-semibold">SAVED: $2,000+ THIS YEAR</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+         <Card className="border-gold-200 shadow-xl bg-gradient-to-br from-white to-cream-50 tech-card-3d">
+  <CardContent className="p-8">
+    <div className="flex mb-4 justify-center">
+      {[...Array(5)].map((_, i) => (
+        <Star key={i} className="w-5 h-5 fill-gold-400 text-gold-400" />
+      ))}
+    </div>
 
-            <Card className="border-gold-200 shadow-xl bg-gradient-to-br from-white to-cream-50 tech-card-3d">
-              <CardContent className="p-8">
-                <div className="flex mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-gold-400 text-gold-400" />
-                  ))}
-                </div>
-                <p className="text-charcoal-700 mb-6 italic text-sm leading-relaxed">
-                  "At 28, I was already spending like I had a trust fund on skincare. These DIY recipes work better than
-                  my $150 La Mer cream. My friends keep asking what I'm using!"
-                </p>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-gold-200 to-gold-300 rounded-full flex items-center justify-center">
-                    <span className="text-gold-800 font-bold text-lg">S</span>
-                  </div>
-                  <div>
-                    <p className="font-bold text-charcoal-800 text-sm">Sarah Chen, 28</p>
-                    <p className="text-xs text-charcoal-500">Software Engineer</p>
-                    <p className="text-xs text-gold-600 font-semibold">SAVED: $1,800+ THIS YEAR</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+    <p className="text-charcoal-700 mb-6 italic text-sm leading-relaxed text-center">
+      "I was spending $300+ monthly at Sephora. Now I make better products at home for under $20/month. My
+      skin has never looked better, and I've saved over $2,000 this year alone!"
+    </p>
 
-            <Card className="border-gold-200 shadow-xl bg-gradient-to-br from-white to-cream-50 tech-card-3d">
-              <CardContent className="p-8">
-                <div className="flex mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-gold-400 text-gold-400" />
-                  ))}
-                </div>
-                <p className="text-charcoal-700 mb-6 italic text-sm leading-relaxed">
-                  "At 58, I thought great skin was only for the wealthy. These natural recipes proved me wrong! I look
-                  10 years younger and my retirement fund is intact."
-                </p>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-purple-200 to-purple-300 rounded-full flex items-center justify-center">
-                    <span className="text-purple-800 font-bold text-lg">L</span>
-                  </div>
-                  <div>
-                    <p className="font-bold text-charcoal-800 text-sm">Linda Thompson, 58</p>
-                    <p className="text-xs text-charcoal-500">Retired Teacher</p>
-                    <p className="text-xs text-gold-600 font-semibold">SAVED: $1,200+ THIS YEAR</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+    <div className="flex items-center gap-4">
+      <Image
+        src="/testimonials/MariaR.png"
+        alt="Maria Rodriguez"
+        width={48}
+        height={48}
+        className="rounded-full border border-gold-100 shadow-md"
+      />
+      <div>
+        <p className="font-bold text-charcoal-800 text-sm">Maria Rodriguez, 34</p>
+        <p className="text-xs text-charcoal-500">Marketing Manager & Mom of 2</p>
+        <p className="text-xs text-gold-600 font-semibold">SAVED: $2,000+ THIS YEAR</p>
+      </div>
+    </div>
+  </CardContent>
+</Card>
+
+           <Card className="border-gold-200 shadow-xl bg-gradient-to-br from-white to-cream-50 tech-card-3d">
+  <CardContent className="p-8">
+    <div className="flex mb-4 justify-center">
+      {[...Array(5)].map((_, i) => (
+        <Star key={i} className="w-5 h-5 fill-gold-400 text-gold-400" />
+      ))}
+    </div>
+
+    <p className="text-charcoal-700 mb-6 italic text-sm leading-relaxed text-center">
+      "At 28, I was already spending like I had a trust fund on skincare. These DIY recipes work better than
+      my $150 La Mer cream. My friends keep asking what I'm using!"
+    </p>
+
+    <div className="flex items-center gap-4">
+      <Image
+        src="/testimonials/SaraChen.png"
+        alt="Sara Chen"
+        width={48}
+        height={48}
+        className="rounded-full border border-gold-100 shadow-md"
+      />
+      <div>
+        <p className="font-bold text-charcoal-800 text-sm">Sara Chen, 28</p>
+        <p className="text-xs text-charcoal-500">Software Engineer</p>
+        <p className="text-xs text-gold-600 font-semibold">SAVED: $1,800+ THIS YEAR</p>
+      </div>
+    </div>
+  </CardContent>
+</Card>
+
+          <Card className="border-gold-200 shadow-xl bg-gradient-to-br from-white to-cream-50 tech-card-3d">
+  <CardContent className="p-8">
+    <div className="flex mb-4 justify-center">
+      {[...Array(5)].map((_, i) => (
+        <Star key={i} className="w-5 h-5 fill-gold-400 text-gold-400" />
+      ))}
+    </div>
+
+    <p className="text-charcoal-700 mb-6 italic text-sm leading-relaxed text-center">
+      "At 58, I thought great skin was only for the wealthy. These natural recipes proved me wrong!
+      I look 10 years younger and my retirement fund is intact."
+    </p>
+
+    <div className="flex items-center gap-4">
+      <Image
+        src="/testimonials/lindaT.png"
+        alt="Linda Thompson"
+        width={48}
+        height={48}
+        className="rounded-full border border-gold-100 shadow-md"
+      />
+      <div>
+        <p className="font-bold text-charcoal-800 text-sm">Linda Thompson, 58</p>
+        <p className="text-xs text-charcoal-500">Retired Teacher</p>
+        <p className="text-xs text-gold-600 font-semibold">SAVED: $1,200+ THIS YEAR</p>
+      </div>
+    </div>
+  </CardContent>
+</Card>
           </div>
 
           {/* Before/After Style Results */}
           <div className="bg-gradient-to-r from-gold-50 to-rose-50 rounded-3xl p-12 border border-gold-200 tech-card-3d">
             <h3 className="text-3xl font-serif text-charcoal-800 text-center mb-12 subsection-header-3d">
-              The Transformation Speaks for Itself
+              Choose Your Path: The Expensive Trap vs. The Empowered Way
             </h3>
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
@@ -594,6 +640,69 @@ export default function LandingPage() {
                   </div>
                 </CardContent>
               </Card>
+
+              <Card className="border-gold-200 shadow-xl bg-gradient-to-br from-white to-cream-50 tech-card-3d">
+                <CardContent className="p-8">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-pink-400 to-pink-500 rounded-2xl flex items-center justify-center flex-shrink-0 tech-icon">
+                      <Star className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-charcoal-800 mb-3">
+                        The Core Recipe Collection: 7+ Signature Luxury Dupes
+                      </h3>
+                      <p className="text-charcoal-600 leading-relaxed text-xs">
+                       Get our master collection of simple, proven recipes that replicate the effects of
+                        high-end creams and serums from brands like La Mer and Estée Lauder. These are
+                        the core recipes you'll use again and again.
+                      </p>
+                      <div className="mt-4 text-xs text-gold-600 font-semibold">Value: $400+ (Yours for $88)</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-gold-200 shadow-xl bg-gradient-to-br from-white to-cream-50 tech-card-3d">
+                <CardContent className="p-8">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-2xl flex items-center justify-center flex-shrink-0 tech-icon">
+                      <CalendarCheck className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-charcoal-800 mb-3">
+                         Simple A.M./P.M. Routines (20s to 60s+)
+                      </h3>
+                      <p className="text-charcoal-600 leading-relaxed text-xs">
+                       No more guessing. We've laid out simple, checklist-style morning and evening
+routines for every decade of your life, telling you exactly which recipes to use for
+maximum results.
+                      </p>
+                      <div className="mt-4 text-xs text-gold-600 font-semibold">Value: $150+ (Yours for $88)</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-gold-200 shadow-xl bg-gradient-to-br from-white to-cream-50 tech-card-3d">
+                <CardContent className="p-8">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-rose-500 to-red-500 rounded-2xl flex items-center justify-center flex-shrink-0 tech-icon">
+                      <AlarmClock className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-charcoal-800 mb-3">
+                        Quick-Fix Emergency Treatments
+                      </h3>
+                      <p className="text-charcoal-600 leading-relaxed text-xs">
+                       Important meeting? Unexpected breakout? Get our 15-minute "miracle" recipes that
+use ingredients you already have to deliver instant results when you need them
+most.
+                      </p>
+                      <div className="mt-4 text-xs text-gold-600 font-semibold">Value: $100+ (Yours for $88)</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
 
             <div className="space-y-8">
@@ -654,6 +763,70 @@ export default function LandingPage() {
                   </div>
                 </CardContent>
               </Card>
+
+              
+              <Card className="border-gold-200 shadow-xl bg-gradient-to-br from-white to-cream-50 tech-card-3d">
+                <CardContent className="p-8">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-green-600 to-lime-500 rounded-2xl flex items-center justify-center flex-shrink-0 tech-icon">
+                      <BookOpen className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-charcoal-800 mb-3">
+                        The "Powerhouse 5" Ingredient Guide
+                      </h3>
+                      <p className="text-charcoal-600 leading-relaxed text-xs">
+                        We skip the overwhelm. This is a deep-dive into the 5 core "kitchen pharmacy"
+ingredients—like honey and oats—that do 90% of the work. You'll learn exactly why
+they're better than expensive lab-made chemicals.
+                      </p>
+                      <div className="mt-4 text-xs text-gold-600 font-semibold">Value: $150+ (Yours for $88)</div>
+                    </div>
+                  </div> 
+                </CardContent>
+              </Card>
+
+              <Card className="border-gold-200 shadow-xl bg-gradient-to-br from-white to-cream-50 tech-card-3d">
+                <CardContent className="p-8">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-violet-500 rounded-2xl flex items-center justify-center flex-shrink-0 tech-icon">
+                      <Droplet className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-charcoal-800 mb-3">
+                        Simple Swaps for Sensitive Skin
+                      </h3>
+                      <p className="text-charcoal-600 leading-relaxed text-xs">
+                        Worried about a reaction? We've included our guide to patch testing and a simple
+ingredient substitution chart so you can easily adapt any recipe for sensitive or
+reactive skin.
+                      </p>
+                      <div className="mt-4 text-xs text-gold-600 font-semibold">Value: $100+ (Yours for $88)</div>
+                    </div>
+                  </div> 
+                </CardContent>
+              </Card>
+
+  <Card className="border-gold-200 shadow-xl bg-gradient-to-br from-white to-cream-50 tech-card-3d">
+                <CardContent className="p-8">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-2xl flex items-center justify-center flex-shrink-0 tech-icon">
+                      <ClipboardList className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-charcoal-800 mb-3">
+                         BONUS: Printable Recipe Cards & Shopping List
+                      </h3>
+                      <p className="text-charcoal-600 leading-relaxed text-xs">
+                        Get beautifully designed recipe cards you can print for your kitchen, plus a master
+shopping list of every ingredient you'll need so you never have to guess what to buy.
+                      </p>
+                      <div className="mt-4 text-xs text-gold-600 font-semibold">Value: $50+ (Yours FREE)</div>
+                    </div>
+                  </div> 
+                </CardContent>
+              </Card>
+
             </div>
           </div>
 
@@ -678,7 +851,7 @@ export default function LandingPage() {
               <div className="absolute inset-0 bg-gradient-to-br from-gold-200/50 to-rose-200/50 rounded-3xl blur-2xl"></div>
               <div className="relative bg-gradient-to-br from-cream-50 to-white rounded-3xl p-8 shadow-2xl border border-gold-200 tech-card-3d">
                 <Image
-                  src="/placeholder.svg?height=500&width=400"
+                  src="/images/Image3-Profile.png"
                   alt="Jessica Lee - Certified Holistic Aesthetician"
                   width={400}
                   height={500}
@@ -796,12 +969,18 @@ export default function LandingPage() {
               </p>
             </div>
 
-            <Button
-              size="lg"
-              className="bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white px-12 py-6 text-xl font-semibold rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 border border-rose-400 tech-button mb-4"
-            >
-              Get Your Beauty Guide Now - Still Only $88
-            </Button>
+                            <Button
+                  size="lg"
+                  className="w-full md:w-auto bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white px-12 py-6 text-xl font-semibold rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 border border-rose-400 tech-button"
+                  id="buy-now-btn"
+                  onClick={handleBuyNowClick}
+                >
+                  Yes! I Want The Recipes – Only $88
+                </Button>
+                <p className="text-xs text-center md:text-left text-charcoal-600 mt-2">
+  Prefer a payment plan? Click here for 3 easy installments of $33.
+</p>
+
 
             <p className="text-xs text-charcoal-500">
               ⚡ Price increases to $297 soon • Limited time offer • Instant access
@@ -911,28 +1090,36 @@ export default function LandingPage() {
             <h3 className="text-3xl font-serif mb-6 subsection-header-3d">Complete Transformation Package</h3>
             <div className="space-y-4 text-left">
               <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                <span className="text-sm">80-Page True Beauty Guide</span>
-                <span className="font-bold text-lg">$297</span>
+                <span className="text-sm">The 75-Page Guide & Recipe Book</span>
+                <span className="font-bold text-lg">$400</span>
               </div>
               <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                <span className="text-sm">Printable Recipe Cards</span>
-                <span className="font-bold text-lg">$97</span>
+                <span className="text-sm">The "Powerhouse 5" Ingredient Guide</span>
+                <span className="font-bold text-lg">$150</span>
               </div>
               <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                <span className="text-sm">Bonus Shopping Lists & Calendar</span>
-                <span className="font-bold text-lg">$47</span>
+                <span className="text-sm">Simple A.M./P.M. Routines</span>
+                <span className="font-bold text-lg">$150</span>
               </div>
               <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                <span className="text-sm">Sensitive Skin Modifications</span>
-                <span className="font-bold text-lg">$97</span>
+                <span className="text-sm">Simple Swaps for Sensitive Skin</span>
+                <span className="font-bold text-lg">$100</span>
+              </div>
+              <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                <span className="text-sm">Quick-Fix Emergency Treatments </span>
+                <span className="font-bold text-lg">$100</span>
+              </div>
+              <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                <span className="text-sm">BONUS: Printable Cards & Shopping List</span>
+                <span className="font-bold text-lg">$50</span>
               </div>
               <div className="flex items-center justify-between py-3 text-lg font-bold">
                 <span>Total Value:</span>
-                <span className="line-through text-gray-500">$538</span>
+                <span className="line-through text-gray-500">$950+</span>
               </div>
               <div className="text-center py-4 bg-gradient-to-r from-rose-100 to-gold-100 rounded-2xl">
                 <div className="text-3xl font-bold text-rose-600 mb-2 price-3d">Your Investment Today: Only $88</div>
-                <div className="text-xs text-charcoal-600">That's 91% OFF the regular price!</div>
+                <div className="text-xs text-charcoal-600">That's 90% OFF the regular price!</div>
               </div>
             </div>
           </div>
@@ -970,46 +1157,55 @@ export default function LandingPage() {
 
       {/* Footer */}
       <footer className="py-12 px-4 bg-charcoal-900 text-charcoal-300">
-        <div className="container mx-auto max-w-4xl">
-          <div className="text-center space-y-6">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <h3 className="text-2xl font-serif text-white">The True Beauty Guide</h3>
-            </div>
+  <div className="container mx-auto max-w-4xl">
+    <div className="text-center space-y-6">
+      <div className="flex items-center justify-center gap-3 mb-6">
+        <h3 className="text-2xl font-serif text-white">The True Beauty Guide</h3>
+      </div>
 
-            <Separator className="bg-charcoal-700" />
+      <Separator className="bg-charcoal-700" />
 
-            <div className="grid md:grid-cols-3 gap-8 text-xs">
-              <div>
-                <h4 className="font-semibold text-white mb-3">Contact</h4>
-                <p>support@truebeautyguide.com</p>
-                <p>Customer Service Available 24/7</p>
-              </div>
-              <div>
-                <h4 className="font-semibold text-white mb-3">Guarantee</h4>
-                <p>30-Day Money-Back Promise</p>
-                <p>No Questions Asked</p>
-              </div>
-              <div>
-                <h4 className="font-semibold text-white mb-3">Secure</h4>
-                <p>256-Bit SSL Encryption</p>
-                <p>Your Information is Protected</p>
-              </div>
-            </div>
-
-            <Separator className="bg-charcoal-700" />
-
-            <div className="space-y-4">
-              <p className="text-center">© 2025 The True Beauty Guide. All rights reserved.</p>
-              <p className="text-xs opacity-75 max-w-2xl mx-auto">
-                This product is not intended to diagnose, treat, cure, or prevent any disease. Individual results may
-                vary. The testimonials presented are individual experiences and are not intended to represent or
-                guarantee that anyone will achieve the same or similar results. Always consult with a healthcare
-                professional before starting any new skincare routine.
-              </p>
-            </div>
-          </div>
+      <div className="grid md:grid-cols-3 gap-8 text-xs">
+        <div>
+          <h4 className="font-semibold text-white mb-3">Contact</h4>
+          <p>support@truebeautyguide.com</p>
+          <p>Email Support available. We reply within 24 hours</p>
         </div>
-      </footer>
+        <div>
+          <h4 className="font-semibold text-white mb-3">Guarantee</h4>
+          <p>30-Day Money-Back Promise</p>
+          <p>No Questions Asked</p>
+        </div>
+        <div>
+          <h4 className="font-semibold text-white mb-3">Secure</h4>
+          <p>256-Bit SSL Encryption</p>
+          <p>Your Information is Protected</p>
+        </div>
+      </div>
+
+      <Separator className="bg-charcoal-700" />
+
+      {/* New Legal Links Section */}
+      <div className="text-xs flex justify-center gap-6 opacity-80">
+        <a href="/privacy-policy" className="hover:underline">Privacy Policy</a>
+        <span>|</span>
+        <a href="/terms-of-service" className="hover:underline">Terms of Service</a>
+      </div>
+
+      {/* Copyright & Disclaimer */}
+      <div className="space-y-4">
+        <p className="text-center">© 2025 The True Beauty Guide. All rights reserved.</p>
+        <p className="text-xs opacity-75 max-w-2xl mx-auto">
+          This product is not intended to diagnose, treat, cure, or prevent any disease. Individual results may
+          vary. The testimonials presented are individual experiences and are not intended to represent or
+          guarantee that anyone will achieve the same or similar results. Always consult with a healthcare
+          professional before starting any new skincare routine.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
     </div>
   )
 }

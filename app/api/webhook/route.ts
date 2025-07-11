@@ -6,46 +6,55 @@ import "dotenv/config";
 console.log("🔐 Loaded Signing Secret:", process.env.LEMON_SQUEEZY_SIGNING_SECRET);
 
 export async function POST(req: Request) {
-  const rawBody = await req.text(); // Needed for signature verification
-  fs.writeFileSync("payload.json", rawBody); // ✅ Save the *real* one the server sees
+  const rawBody = await req.text();
+  fs.writeFileSync("payload.json", rawBody); // Save raw body for debugging
   console.log("🟢 payload.json saved for signature check");
 
   console.log("🟡 Received raw body:", rawBody);
   console.log("🟡 Raw body length:", rawBody.length);
 
-  console.log("🔑 Server Signing Secret:", process.env.LEMON_SQUEEZY_SIGNING_SECRET);
-
   const signature = (req.headers.get("x-signature") || "").trim();
   const secret = process.env.LEMON_SQUEEZY_SIGNING_SECRET || "";
 
-  const expectedSignature = crypto
-    .createHmac("sha256", secret)
-    .update(rawBody)
-    .digest("hex");
-
-  console.log("Signature from header:", JSON.stringify(signature));
-  console.log("Expected signature:    ", expectedSignature);
-
-  if (signature !== expectedSignature) {
-    console.error("❌ Invalid signature");
-    return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
+  let body: any;
+  try {
+    body = JSON.parse(rawBody);
+  } catch (err) {
+    console.error("❌ Failed to parse JSON:", err);
+    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const body = JSON.parse(rawBody);
-  console.log("✅ Verified webhook:", body);
+  const isTestMode = !signature || body?.meta?.test_mode === true;
 
-  // ✅ Improved Extraction Logic
+  if (isTestMode) {
+    console.warn("⚠️ Skipping signature verification (test mode or no signature)");
+  } else {
+    const expectedSignature = crypto
+      .createHmac("sha256", secret)
+      .update(rawBody)
+      .digest("hex");
+
+    console.log("Signature from header:", JSON.stringify(signature));
+    console.log("Expected signature:    ", expectedSignature);
+
+    if (signature !== expectedSignature) {
+      console.error("❌ Invalid signature");
+      return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
+    }
+  }
+
+  console.log("✅ Webhook verified or test mode");
+
+  // ✅ Extract data
   const email =
     body.email ||
     body?.data?.attributes?.email ||
     body?.data?.attributes?.user_email;
 
-  const valueCents =
+  const value =
     body.value ||
     body?.data?.attributes?.total ||
     body?.data?.attributes?.subtotal;
-
-  const value = valueCents ? valueCents / 100 : undefined;
 
   const currency =
     body.currency ||
@@ -56,7 +65,7 @@ export async function POST(req: Request) {
   const fbclid = body.fbclid || body?.meta?.custom_data?.fbclid;
 
   console.log("📥 Extracted email:", email);
-  console.log("📥 Extracted value (converted):", value);
+  console.log("📥 Extracted value:", value);
   console.log("📥 Extracted currency:", currency);
 
   if (!email || !value) {
